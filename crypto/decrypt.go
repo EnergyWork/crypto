@@ -38,13 +38,22 @@ func Decrypt(arr []string) ([]string, error) {
 			if err != nil {
 				return nil, err//errors.New("Неверная последовательность скобок")
 			}
-			if n, serr := strconv.Atoi(arr[i-1]); serr == nil {
-				tmp, decerr := Decrypt(arr[i+1:j])
-				if decerr != nil {
-					return nil, err //errors.New("Неверная последовательность скобок")
-				}
-				for k := 0; k < n; k++ {
-					seq = append(seq, strings.Join(tmp, ""))
+			if i > 0 {
+				if n, serr := strconv.Atoi(arr[i-1]); serr == nil {
+					tmp, decerr := Decrypt(arr[i+1:j])
+					if decerr != nil {
+						return nil, err //errors.New("Неверная последовательность скобок")
+					}
+					for k := 0; k < n; k++ {
+						seq = append(seq, strings.Join(tmp, ""))
+					}
+				} else {
+					if decarr, decerr := Decrypt(arr[i+1:j]); decerr == nil {
+						decoded := strings.Join(decarr, "")
+						seq = append(seq, decoded)
+					} else {
+						return nil, err //errors.New("Неверная последовательность скобок")
+					}
 				}
 			} else {
 				if decarr, decerr := Decrypt(arr[i+1:j]); decerr == nil {

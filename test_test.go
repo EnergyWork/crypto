@@ -40,4 +40,11 @@ func TestDecrypt(t *testing.T) {
 	if sdecoded != decoded_real {
 		t.Errorf("%s not equal %s", sdecoded, decoded_real)
 	}
+
+	decoded = Decrypt(strings.Split("(abc2d)", ""))
+	sdecoded = strings.Join(decoded, "")
+	decoded_real = "aabcdd"
+	if sdecoded != decoded_real {
+		t.Errorf("%s not equal %s", sdecoded, decoded_real)
+	}
 }
