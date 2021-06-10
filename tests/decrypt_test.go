@@ -1,4 +1,4 @@
-package main
+package tests
 
 import (
 	"api-crypto/crypto"
