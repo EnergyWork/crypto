@@ -8,13 +8,16 @@ import (
 
 func Convolution(arr []string) []string {
 	var seq []string
-	for i := 0; i < len(arr)-1; i++ {
+	for i := 0; i < len(arr); i++ {
 		var counter int = 0
-		for j := i+1; j <= len(arr) && arr[j] == arr[i]; j++ {
+		for j := i; j < len(arr) && arr[j] == arr[i]; j++ {
 			counter += 1
 		}
-		seq = append(seq, strconv.Itoa(counter))
+		if counter != 1 {
+			seq = append(seq, strconv.Itoa(counter))
+		}
 		seq = append(seq, arr[i])
+		i += counter-1
 	}
 	return seq
 }

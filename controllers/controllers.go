@@ -32,7 +32,14 @@ func Crypto(c *gin.Context) {
 		return
 	}
 	if data.EncData != "" {
-		c.JSON(http.StatusOK, gin.H{"data" : "this service isn't available"})
+		dataSlice := strings.Split(data.EncData, "")
+		encrypted, err := crypto.Encrypt(dataSlice)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"data" : err.Error()})
+			return
+		}
+		encryptedString := strings.Join(encrypted, "")
+		c.JSON(http.StatusOK, gin.H{"encrypted" : encryptedString})
 		return
 	}
 	c.JSON(http.StatusBadRequest, gin.H{"data" : "wrong request"})
