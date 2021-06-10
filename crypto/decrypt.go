@@ -36,12 +36,12 @@ func Decrypt(arr []string) ([]string, error) {
 		if arr[i] == "(" {
 			j, err := GetIndexLastBracket(arr[i:], i)
 			if err != nil {
-				return nil, errors.New("Неверная последовательность скобок")
+				return nil, err//errors.New("Неверная последовательность скобок")
 			}
 			if n, serr := strconv.Atoi(arr[i-1]); serr == nil {
 				tmp, decerr := Decrypt(arr[i+1:j])
 				if decerr != nil {
-					return nil, errors.New("Неверная последовательность скобок")
+					return nil, err //errors.New("Неверная последовательность скобок")
 				}
 				for k := 0; k < n; k++ {
 					seq = append(seq, strings.Join(tmp, ""))
@@ -51,7 +51,7 @@ func Decrypt(arr []string) ([]string, error) {
 					decoded := strings.Join(decarr, "")
 					seq = append(seq, decoded)
 				} else {
-					return nil, errors.New("Неверная последовательность скобок")
+					return nil, err //errors.New("Неверная последовательность скобок")
 				}
 			}
 			i += j - i - 1

@@ -9,7 +9,7 @@ import (
 )
 
 func CheckAccess(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"data" : "service is available"})
+	c.JSON(http.StatusOK, gin.H{"data" : "the service is available"})
 }
 
 func Crypto(c *gin.Context) {
@@ -35,5 +35,5 @@ func Crypto(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data" : "this service isn't available"})
 		return
 	}
-		c.JSON(http.StatusBadRequest, gin.H{"data" : "wrong request"})
+	c.JSON(http.StatusBadRequest, gin.H{"data" : "wrong request"})
 }
