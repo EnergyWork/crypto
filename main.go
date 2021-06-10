@@ -11,6 +11,10 @@ func HandleRequests() {
 	router := gin.Default()
 	router.GET("/api/crypto", controllers.CheckAccess)
 	router.POST("/api/crypto", controllers.Crypto)
+	/*
+	{ "decrypt" : "a2(ce3f)" }
+	{ "encrypt" : "acefffcefff" }
+	*/
 
 	port := os.Getenv("PORT")
 	if port == "" {

@@ -20,9 +20,23 @@ func TestDecrypt(t *testing.T) {
 		t.Errorf("%s not equal %s", sdecoded, decoded_real)
 	}
 
-	decoded = Decrypt(strings.Split("22a", ""))
+	decoded = Decrypt(strings.Split("2a", ""))
 	sdecoded = strings.Join(decoded, "")
-	decoded_real = "aaaa"
+	decoded_real = "aa"
+	if sdecoded != decoded_real {
+		t.Errorf("%s not equal %s", sdecoded, decoded_real)
+	}
+
+	decoded = Decrypt(strings.Split("a2(er)2(vf)2r", ""))
+	sdecoded = strings.Join(decoded, "")
+	decoded_real = "aerervfvfrr"
+	if sdecoded != decoded_real {
+		t.Errorf("%s not equal %s", sdecoded, decoded_real)
+	}
+
+	decoded = Decrypt(strings.Split("2(ar)2(e2(ho))", ""))
+	sdecoded = strings.Join(decoded, "")
+	decoded_real = "ararehohoehoho"
 	if sdecoded != decoded_real {
 		t.Errorf("%s not equal %s", sdecoded, decoded_real)
 	}

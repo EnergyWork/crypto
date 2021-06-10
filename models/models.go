@@ -1,5 +1,6 @@
 package models
 
-type DecData struct {
-	DecryptString string `json:"decrypt"`
+type CryptoData struct {
+	DecData string `json:"decrypt"`
+	EncData string `json:"encrypt"`
 }
