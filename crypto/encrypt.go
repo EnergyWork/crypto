@@ -9,11 +9,17 @@ func GetString(arr []string) string {
 	return strings.Join(arr, "")
 }
 
+func AddByElement(seq *[]string, str []string) {
+	for _, el := range str {
+		*seq = append(*seq, el)
+	}
+}
+
 func Convolution(arr []string, step int) []string {
 	var seq []string
-	for i := 0; i < len(arr); {
+	for i := 0; i < len(arr)-1; {
 		var counter = 0
-		for j := i; j < len(arr) && GetString(arr[j:j+step]) == GetString(arr[i:i+step]); j += step {
+		for j := i+step; j < (len(arr)-step) && (GetString(arr[j:j+step]) == GetString(arr[i:i+step])); j += step {
 			counter += 1
 		}
 		if step == 1 {
@@ -21,18 +27,25 @@ func Convolution(arr []string, step int) []string {
 				seq = append(seq, strconv.Itoa(counter))
 			}
 			seq = append(seq, arr[i])
-			i += counter
+			i += step * counter - 1
 		} else {
-			seq = seq[:len(seq)-1]
+			if i !=0 {
+				seq = seq[:len(seq)-1]
+			}
 			if counter > 1 {
 				seq = append(seq, strconv.Itoa(counter))
-				seq = append(seq, GetString(arr[i:i+step]))
+				seq = append(seq, "(")
+				AddByElement(&seq, arr[i:i+step]) //seq = append(seq, GetString(arr[i:i+step]))
+				seq = append(seq, ")")
 				i += step * counter - 1
 			} else  {
-				seq = append(seq, GetString(arr[i:i+step]))
+				AddByElement(&seq, arr[i:i+step]) //seq = append(seq, GetString(arr[i:i+step]))
 				i += step * counter - 1
 			}
 		}
+	}
+	if step > 0 {
+		AddByElement(&seq, arr[len(arr)-step:])
 	}
 	return seq
 }
