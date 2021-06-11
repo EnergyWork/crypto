@@ -11,26 +11,42 @@ func GetString(arr []string) string {
 
 func Convolution(arr []string, step int) []string {
 	var seq []string
-	for i := 0; i < len(arr); i++ {
+	for i := 0; i < len(arr); {
 		var counter = 0
 		for j := i; j < len(arr) && GetString(arr[j:j+step]) == GetString(arr[i:i+step]); j += step {
 			counter += 1
 		}
-		if counter != 1 {
-			seq = append(seq, strconv.Itoa(counter))
+		if step == 1 {
+			if counter > 1{
+				seq = append(seq, strconv.Itoa(counter))
+			}
+			seq = append(seq, arr[i])
+			i += counter
+		} else {
+			seq = seq[:len(seq)-1]
+			if counter > 1 {
+				seq = append(seq, strconv.Itoa(counter))
+				seq = append(seq, GetString(arr[i:i+step]))
+				i += step * counter - 1
+			} else  {
+				seq = append(seq, GetString(arr[i:i+step]))
+				i += step * counter - 1
+			}
 		}
-		if step == 1 || counter > 1 {
-			seq = append(seq, GetString(arr[i:i+step]))
-		}
-		i += counter-1
 	}
 	return seq
 }
 
 func Encrypt(arr []string) ([]string, error) {
 	var seq = arr
-	for step := 1; step <= len(arr) / 2; step++ {
-		seq = Convolution(seq, step)
+	var step = 1
+	for {
+		if step <= len(seq) {
+			seq = Convolution(seq, step)
+		} else {
+			break
+		}
+		step++
 	}
 	/*var result []string
 	for step := 1; step <= (len(seq) / 2); step++ {
