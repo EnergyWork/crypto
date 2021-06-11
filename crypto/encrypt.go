@@ -17,9 +17,9 @@ func AddByElement(seq *[]string, str []string) {
 
 func Convolution(arr []string, step int) []string {
 	var seq []string
-	for i := 0; i < len(arr)-1; {
+	for i := 0; i < len(arr); {
 		var counter = 0
-		for j := i+step; j < (len(arr)-step) && (GetString(arr[j:j+step]) == GetString(arr[i:i+step])); j += step {
+		for j := i; j < (len(arr)) && (GetString(arr[j:j+step]) == GetString(arr[i:i+step])); j += step {
 			counter += 1
 		}
 		if step == 1 {
@@ -27,10 +27,10 @@ func Convolution(arr []string, step int) []string {
 				seq = append(seq, strconv.Itoa(counter))
 			}
 			seq = append(seq, arr[i])
-			i += step * counter - 1
+			i += step * counter
 		} else {
 			if i !=0 {
-				seq = seq[:len(seq)-1]
+ 				seq = seq[:len(seq)-1]
 			}
 			if counter > 1 {
 				seq = append(seq, strconv.Itoa(counter))
@@ -44,8 +44,8 @@ func Convolution(arr []string, step int) []string {
 			}
 		}
 	}
-	if step > 0 {
-		AddByElement(&seq, arr[len(arr)-step:])
+	if step > 1 {
+		//AddByElement(&seq, arr[len(arr)-step:])
 	}
 	return seq
 }
