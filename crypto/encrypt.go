@@ -10,42 +10,45 @@ func GetString(arr []string) string {
 }
 
 func AddByElement(seq *[]string, str []string) {
-	for _, el := range str {
+	*seq = append(*seq, str...)
+	/*for _, el := range str {
 		*seq = append(*seq, el)
-	}
+	}*/
 }
 
 func Convolution(arr []string, step int) []string {
 	var seq []string
 	for i := 0; i < len(arr); {
 		var counter = 0
-		for j := i; j < (len(arr)) && (GetString(arr[j:j+step]) == GetString(arr[i:i+step])); j += step {
-			counter += 1
+		for j := i; j <= len(arr)-step; j += step {
+			if GetString(arr[i:i+step]) == GetString(arr[j:j+step]) {
+				counter += 1
+			} else {
+				break
+			}
 		}
 		if step == 1 {
-			if counter > 1{
+			if counter > 1 {
 				seq = append(seq, strconv.Itoa(counter))
 			}
 			seq = append(seq, arr[i])
-			i += step * counter
-		} else {
-			if i !=0 {
- 				seq = seq[:len(seq)-1]
+			if counter != 0 {
+				i += step * counter
+			} else {
+				i += step
 			}
+		} else {
 			if counter > 1 {
 				seq = append(seq, strconv.Itoa(counter))
 				seq = append(seq, "(")
 				AddByElement(&seq, arr[i:i+step]) //seq = append(seq, GetString(arr[i:i+step]))
 				seq = append(seq, ")")
-				i += step * counter - 1
+				i += step * counter
 			} else  {
-				AddByElement(&seq, arr[i:i+step]) //seq = append(seq, GetString(arr[i:i+step]))
-				i += step * counter - 1
+				seq = append(seq, arr[i])
+				i += 1
 			}
 		}
-	}
-	if step > 1 {
-		//AddByElement(&seq, arr[len(arr)-step:])
 	}
 	return seq
 }
@@ -54,7 +57,7 @@ func Encrypt(arr []string) ([]string, error) {
 	var seq = arr
 	var step = 1
 	for {
-		if step <= len(seq) {
+		if step <= len(seq) / 2 {
 			seq = Convolution(seq, step)
 		} else {
 			break
