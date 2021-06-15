@@ -19,4 +19,16 @@ func TestEncrypt(t *testing.T) {
 	if sdecoded != decoded_real {
 		t.Errorf("%s not equal %s", sdecoded, decoded_real)
 	}
+	decoded, _ = crypto.Encrypt(strings.Split("aaababaaa", ""))
+	sdecoded = strings.Join(decoded, "")
+	decoded_real = "2a2(ab)3a"
+ 	if sdecoded != decoded_real {
+		t.Errorf("%s not equal %s", sdecoded, decoded_real)
+	}
+	decoded, _ = crypto.Encrypt(strings.Split("aaaaaaaaaaaaaa", ""))
+	sdecoded = strings.Join(decoded, "")
+	decoded_real = "14a"
+	if sdecoded != decoded_real {
+		t.Errorf("%s not equal %s", sdecoded, decoded_real)
+	}
 }
