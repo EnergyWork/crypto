@@ -19,15 +19,17 @@ func TestEncrypt(t *testing.T) {
 	if sdecoded != decoded_real {
 		t.Errorf("%s not equal %s", sdecoded, decoded_real)
 	}
+	/*Если начинать свертки с шага len(arr)/2, то данный тест будет пройден
+	Если начинать свертки с шага 1, то в данном тесте будет неверная последовательность, но в следующем тесте всё будет окей*/
 	decoded, _ = crypto.Encrypt(strings.Split("aaababaaa", ""))
 	sdecoded = strings.Join(decoded, "")
 	decoded_real = "2a2(ab)3a"
  	if sdecoded != decoded_real {
 		t.Errorf("%s not equal %s", sdecoded, decoded_real)
 	}
-	decoded, _ = crypto.Encrypt(strings.Split("aaaaaaaaaaaaaa", ""))
+	decoded, _ = crypto.Encrypt(strings.Split("aaaaaaaaa", ""))
 	sdecoded = strings.Join(decoded, "")
-	decoded_real = "14a"
+	decoded_real = "9a"
 	if sdecoded != decoded_real {
 		t.Errorf("%s not equal %s", sdecoded, decoded_real)
 	}
